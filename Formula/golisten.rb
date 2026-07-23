@@ -1,5 +1,5 @@
 class Golisten < Formula
-  desc "CLI for speech-to-text using local whisper.cpp/transcribe.cpp, OpenAI, ElevenLabs, or Deepgram - no ffmpeg required"
+  desc "Speech-to-text CLI using local whisper.cpp/transcribe.cpp or cloud APIs"
   homepage "https://github.com/schappim/golisten"
   url "https://github.com/schappim/golisten/archive/refs/tags/v0.2.0.tar.gz"
   sha256 "4c4790dd886138ec1d14d685aa75e902083e5bcb7cb466fb3f6e9e59a9518739"
@@ -29,14 +29,21 @@ class Golisten < Formula
   end
 
   test do
-    assert_match "golisten", shell_output("#{bin}/golisten --help")
-    assert_match "transcribe", shell_output("#{bin}/golisten --help")
-    assert_match "parakeet", shell_output("#{bin}/golisten --help")
-    assert_match "deepgram", shell_output("#{bin}/golisten --help")
+    # golisten writes its usage to stderr, and Homebrew's shell_output captures
+    # stdout only, so the redirect is load-bearing.
+    help = shell_output("#{bin}/golisten --help 2>&1")
+    assert_match "golisten", help
+    assert_match "transcribe", help
+    assert_match "parakeet", help
+    assert_match "deepgram", help
 
-    # A request that no backend can satisfy must fail loudly rather than write
-    # an empty transcript.
+    # A request no backend can satisfy must fail loudly rather than write an
+    # empty transcript.
     output = shell_output("#{bin}/golisten -p parakeet -f srt missing.mp3 2>&1", 1)
     assert_match "timestamps", output
+
+    # Transcribing reaches the engine-discovery stage without a model present.
+    (testpath/"empty.mp3").write ""
+    assert_match "empty", shell_output("#{bin}/golisten \#{testpath}/empty.mp3 2>&1", 1)
   end
 end
