@@ -44,6 +44,6 @@ class Golisten < Formula
 
     # Transcribing reaches the engine-discovery stage without a model present.
     (testpath/"empty.mp3").write ""
-    assert_match "empty", shell_output("#{bin}/golisten \#{testpath}/empty.mp3 2>&1", 1)
+    assert_match "empty", shell_output("#{bin}/golisten #{testpath}/empty.mp3 2>&1", 1)
   end
 end
