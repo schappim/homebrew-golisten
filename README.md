@@ -10,12 +10,20 @@ golisten is the mirror of [gospeak](https://github.com/schappim/gospeak): gospea
 # Add the tap
 brew tap schappim/golisten
 
+# Homebrew 6 requires third-party taps to be trusted before it will load them
+brew trust schappim/golisten
+
 # Install golisten
 brew install golisten
 
 # Upgrade to latest version
 brew upgrade golisten
 ```
+
+Without the `brew trust` step Homebrew refuses with *"Refusing to load formula
+schappim/golisten/golisten from untrusted tap"*. Trusting a single formula
+(`brew trust --formula schappim/golisten/golisten`) only covers a formula that
+is already installed, so the whole-tap form is the one needed to install.
 
 ## Quick Start
 
