@@ -1,8 +1,8 @@
 class Golisten < Formula
   desc "Speech-to-text CLI using local whisper.cpp/transcribe.cpp or cloud APIs"
   homepage "https://github.com/schappim/golisten"
-  url "https://github.com/schappim/golisten/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "4c4790dd886138ec1d14d685aa75e902083e5bcb7cb466fb3f6e9e59a9518739"
+  url "https://github.com/schappim/golisten/archive/refs/tags/v0.2.1.tar.gz"
+  sha256 "0d57381945aae1867506c29ff5889ba02368f1421c73b859791ebe039fe55c7f"
   license "MIT"
   head "https://github.com/schappim/golisten.git", branch: "master"
 
